@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react'
+import { useContext, useRef } from 'react'
 import { FormContext } from './FormContext'
 
 const ID_REGEX = new RegExp('^[a-z0-9_-]{5,20}$')
@@ -24,7 +24,7 @@ const FormInput = ({ id, label, inputProps, errorData, setErrorData }) => {
         } else {
             switch (inputId) {
                 case 'id':
-                    result = ID_REGEX.text(value) ? true : 'invalidId'
+                    result = ID_REGEX.test(value) ? true : 'invalidId'
                     break
                 case 'pw':
                     result = PW_REGEX.test(value) ? true : 'invalidPw'
@@ -40,12 +40,6 @@ const FormInput = ({ id, label, inputProps, errorData, setErrorData }) => {
         }
         setErrorData((prev) => ({ ...prev, [inputId]: result }))
     }
-
-    useEffect(() => {
-        if (id === 'id') {
-            inputRef.current.focus()
-        }
-    }, [])
 
     return (
         <div className="mb-4">
